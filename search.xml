@@ -4,11 +4,50 @@
   
     
     <entry>
+      <title>数控电源 (CNC_Power_Supply)</title>
+      <link href="/aritcles/738a4925.html"/>
+      <url>/aritcles/738a4925.html</url>
+      
+        <content type="html"><![CDATA[<h1>赛题要求</h1><p>搭载屏幕显示电压电流数据参数；通过按键或旋钮进行参数设置；输入电压为 5~12V，输出电压与电流可调，具体参数如下：</p><ul><li>电压输出范围：0～12V；</li><li>电压调整步进：0.1V；</li><li>电压测量精度：0.01V；</li><li>电流输出范围：0～2A；</li><li>电流调整步进：0.1A；</li><li>电流测量精度：0.01A。</li></ul><h1>设计摘要</h1><p>本系统采用纯数字方案，以EG2104栅极驱动IC为核心，以STM32G474RBT6单片机为控制器，拓扑结构为四开关管的同步Buck-Boost，根据电压、电流输出采样，进行PID闭环控制，从而实现恒压或恒流输出。直流输入电压5-12V，系统输出直流电压0-12V可调、直流电流0-2A可调，步进电压0.1V、步进电流0.1A。系统搭载屏幕显示输出参数，显示精度0.01，支持用户触屏控制。输入输出接口使用XT30，输入支持过压保护、过流保护，输出支持过压保护、恒流自动切换。</p><h1>系统方案</h1><p>本系统采用双模态、四开关管的同步Buck-Boost拓扑结构作为升降压方案，通过改变单片机的PWM占空比，控制栅极驱动IC改变4颗NMOS的开关，从而获得用户要求的输出。</p><h1>器件选型</h1><p>主控：STM32G474RBT6，最高170 MHz主频，同时具有FPU单元。使用高精度定时器，输出PWM频率为200kHz。使用内部运放用于电压采样。</p><p>MOSFET：因为是高频开关电路，所以MOS管的开关损耗和消耗功率不可忽略。应优先考虑栅极电荷较小、漏源导通电阻较小的MOS管。再根据输入电压，筛选漏源电压、驱动阈值电压小于EG2104供电电压的MOS管。最终，选择了的IRFH8318PbF。</p><p>屏幕：采用陶晶驰T1系列2.8寸串口屏，电阻触摸，与MCU仅通过串口通信，减小对主要pid计算速度的影响。</p><p>辅助电源：由于需要适应5~12V输入需求，且要能带动屏幕，所以先用DC-DC一级降压至4.8V，再用LDO降至其他所需电压。</p><p>电感：计算后选用15uH，饱和电流14.5A的一体成型电感。（原理图中为10uH，并不是实际使用的电感）</p><p>其他芯片型号见原理图，电阻、电容实际使用数值与原理图相同，但型号可能不同。其中EG2104的自举电容用的NP0陶瓷电容。</p><h1>软件程序</h1><ul><li><p>主程序流程图<br><img src="https://img-host-3w9.pages.dev/img/article/CNC-Power-Supply/flow.png" alt="img"></p></li><li><p>CV部分pid模型<br><img src="https://img-host-3w9.pages.dev/img/article/CNC-Power-Supply/pid.png" alt="img"></p></li></ul><p>pid计算部分使用MATLAB中的Simulink生成代码，并部署到单片机上。</p><h1>实物展示</h1><p><img src="https://img-host-3w9.pages.dev/img/article/CNC-Power-Supply/pic1.jpg" alt="img"><br><img src="https://img-host-3w9.pages.dev/img/article/CNC-Power-Supply/pic2.jpg" alt="img"></p><h1>改进方向</h1><ul><li>本系统Buck-Boost为双模态（两路互补PWM波），无需区分升压或降压。可以换成三模态（建议添加输入电压采样，程序自动更改升压or降压模式）。</li><li>pid响应不算快，有较大改进空间，CV和CC切换时不是很流畅。</li><li>如果不需要5V输入，一级降压可以高一点，提高EG2104带载能力。</li><li>输入输出的13V的TVS和5A保险丝是专为本赛题设计，可以更换，以达到更宽的输入输出范围，具体的极限还未测试。</li><li>带载时恒流模式实测值比显示值低，输出2A时低0.1~0.2A，应该是电流采样问题。</li></ul><h1>开源链接</h1><ul><li>嘉立创：<a href="https://oshwhub.com/poria_cocos/2024-zeng-xin-bei-d-ti-shu-kong-dian-yuan">https://oshwhub.com/poria_cocos/2024-zeng-xin-bei-d-ti-shu-kong-dian-yuan</a></li><li>Github：<a href="https://github.com/Poria-Cocos/CNC_Power_Supply">https://github.com/Poria-Cocos/CNC_Power_Supply</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Projects </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 电源 </tag>
+            
+            <tag> 数控电源 </tag>
+            
+            <tag> 电赛 </tag>
+            
+            <tag> 电压采样 </tag>
+            
+            <tag> 电流采样 </tag>
+            
+            <tag> PID </tag>
+            
+            <tag> Buck-Boost </tag>
+            
+            <tag> 开源 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>test</title>
       <link href="/aritcles/d87f7e0c.html"/>
       <url>/aritcles/d87f7e0c.html</url>
       
-        <content type="html"><![CDATA[<h1 id="测试文章test123"><a href="#测试文章test123" class="headerlink" title="测试文章test123"></a>测试文章test123</h1><h2 id="文章内容"><a href="#文章内容" class="headerlink" title="文章内容"></a>文章内容</h2><p>1234567890<br>qwertyuiop<br>一二三四五六七八九十</p><h2 id="article-words"><a href="#article-words" class="headerlink" title="article words"></a>article words</h2>]]></content>
+        <content type="html"><![CDATA[<h1>测试文章test123</h1><h2 id="文章内容">文章内容</h2><p>1234567890<br>qwertyuiop</p><p>一二三四五六七八九十</p><h2 id="article-words">article words</h2><p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Q</mi><mrow><mi mathvariant="normal">g</mi><mtext> </mtext><mi mathvariant="normal">t</mi><mi mathvariant="normal">y</mi><mi mathvariant="normal">p</mi></mrow></msub><mo>=</mo><mn>19</mn><mi mathvariant="normal">n</mi><mi mathvariant="normal">C</mi><mo separator="true">,</mo><mtext> </mtext><msub><mi mathvariant="normal">V</mi><mrow><mi mathvariant="normal">G</mi><mi mathvariant="normal">S</mi></mrow></msub><mo>=</mo><mn>10</mn><mi mathvariant="normal">V</mi><mo separator="true">,</mo><mtext> </mtext><msub><mi mathvariant="normal">R</mi><mrow><mi mathvariant="normal">D</mi><mi mathvariant="normal">S</mi></mrow></msub><mo>=</mo><mn>3.1</mn><mtext> </mtext><mi mathvariant="normal">m</mi><mi mathvariant="normal">Ω</mi></mrow><annotation encoding="application/x-tex">\mathrm{ Q_{g \ typ} = 19 nC, \ V_{GS} = 10 V, \ R_{DS} = 3.1 \, m \Omega }</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">Q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight" style="margin-right:0.01389em;">g</span><span class="mspace mtight"><span class="mtight"> </span></span><span class="mord mathrm mtight">typ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathrm">19nC</span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathrm" style="margin-right:0.01389em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0139em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">GS</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathrm" style="margin-right:0.01389em;">10V</span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathrm">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">DS</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathrm">3.1</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathrm">mΩ</span></span></span></span></span></p>]]></content>
       
       
       <categories>
@@ -20,11 +59,11 @@
       
         <tags>
             
+            <tag> 电源 </tag>
+            
             <tag> tag1 </tag>
             
             <tag> 机器人 </tag>
-            
-            <tag> 电源 </tag>
             
             <tag> tag4 </tag>
             
@@ -39,7 +78,7 @@
       <link href="/aritcles/4a17b156.html"/>
       <url>/aritcles/4a17b156.html</url>
       
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><h3 id="Create-a-new-post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
       
       
       
