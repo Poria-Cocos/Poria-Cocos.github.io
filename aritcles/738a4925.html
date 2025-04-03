@@ -238,14 +238,14 @@ btf.addGlobalFn('pjaxSend', () => {
 <p>其他芯片型号见原理图，电阻、电容实际使用数值与原理图相同，但型号可能不同。其中EG2104的自举电容用的NP0陶瓷电容。</p>
 <h1 id="电路设计">电路设计</h1>
 <h2 id="原理图">原理图</h2>
-<p><img src="https://img-host-3w9.pages.dev/img/article/sch1.png" alt="img"><br>
-<img src="https://img-host-3w9.pages.dev/img/article/sch2.png" alt="img"></p>
+<p><img src="https://img-host-3w9.pages.dev/img/article/CNC-Power-Supply/sch1.png" alt="img"><br>
+<img src="https://img-host-3w9.pages.dev/img/article/CNC-Power-Supply/sch2.png" alt="img"></p>
 <p>图一为核心升降压部分，图中4V8为一级降压后的输出电压4.8V，经测试，若供电电压较低（以4.3V为例测试），则整体带载能力不足，表现为PWM占空比极低时输出两颗MOS无法被驱动。且考虑到赛题最低5V供电，所以最终采取一级降压4.8V、自举电容100nF的方案。</p>
 <p>图二为辅助电源部分，输入电压经过一级降压为4.8V，再经过二级降压为数字3.3V和模拟3.3V，再经过三级降压为模拟2.5V。</p>
 <h2 id="PCB">PCB</h2>
-<p><img src="https://img-host-3w9.pages.dev/img/article/pcb1.png" alt="img"></p>
+<p><img src="https://img-host-3w9.pages.dev/img/article/CNC-Power-Supply/pcb1.png" alt="img"></p>
 <p>上图为主要电流路径，两个白色线框为回路区域示意，左侧输入端有一片保险丝和一片TVS、右侧输出端有一片TVS，三者起保护作用。右侧输出端使用一片5mΩ的电流采样电阻进行电流采样。板上共4个M3螺丝孔，便于后期将PCB固定于外壳。</p>
-<p><img src="https://img-host-3w9.pages.dev/img/article/pcb2.png" alt="img"></p>
+<p><img src="https://img-host-3w9.pages.dev/img/article/CNC-Power-Supply/pcb2.png" alt="img"></p>
 <p>上图左侧为功率地、数字地、模拟地的连接部分，通过0Ω电阻单点连接。右侧白线框为电压采样的分压电阻，采样电压输出后连接到单片机的内置运放，通过内置运放连接到ADC进行采样。</p>
 <h1 id="软件程序">软件程序</h1>
 <h2 id="主程序">主程序</h2>
