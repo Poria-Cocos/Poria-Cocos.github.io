@@ -4,11 +4,46 @@
   
     
     <entry>
+      <title>CUBEMX+STM32+HAL库 串口DMA空闲中断任意数据收发</title>
+      <link href="/aritcles/359f00fc.html"/>
+      <url>/aritcles/359f00fc.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> STM32 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> CUBEMX </tag>
+            
+            <tag> HAL库 </tag>
+            
+            <tag> UART </tag>
+            
+            <tag> DMA </tag>
+            
+            <tag> 空闲中断 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>VESC 从零开始制作无刷电机驱动器系列（一）</title>
       <link href="/aritcles/5527aebe.html"/>
       <url>/aritcles/5527aebe.html</url>
       
-        <content type="html"><![CDATA[<blockquote><p>如果你没有读过<a href="">《VESC 从零开始制作无刷电机驱动器系列》</a>，请先阅读。</p></blockquote><h1 id="什么是-VESC-？">什么是 VESC ？</h1>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>如果你没有读过<a href="https://poria-cocos.github.io/aritcles/f48d1e60.html">《VESC 从零开始制作无刷电机驱动器系列》</a>，请先跳转阅读。</p></blockquote><h1 id="什么是-VESC-？">什么是 VESC ？</h1><h2 id="介绍">介绍</h2><ul><li><p>ESC 是 Electric Speed Controller 的缩写，也就是电子调速控制器，简称电调。</p></li><li><p>VESC是一个开源的ESC，它是按照创建者 Benjamin Vedder 的名字 Vedder 来命名。</p></li><li><p>VESC 主要用于控制无刷电机，最初应用于电动滑板，但由于其高功率和开源的特性，逐渐被广泛应用于电动自行车、无人机、机器人等领域。</p></li><li><p>官网链接：<a href="https://vesc-project.com/">https://vesc-project.com/</a></p></li><li><p>作者github链接：<a href="https://github.com/vedderb">https://github.com/vedderb</a></p></li></ul><h2 id="特点">特点</h2><ul><li>开源的硬件和软件。</li><li>FOC（Field Oriented Control）控制方式。</li><li>多种通信接口：包括 PPM、UART、CAN、I2C 等。</li><li>可编程：提供上位机和源码，便于二次开发。</li><li>支持多种电机角度监测方案：包括无感、霍尔传感器、编码器、HFI等。</li></ul><h1 id="自制-VESC-所需的硬件条件">自制 VESC 所需的硬件条件</h1><ul><li>PCB、元器件</li><li>焊接设备（电烙铁/热风枪/加热台/外包SMT）</li><li>做好安全防护的电源</li><li>示波器（监测电气参数、DEBUG用）</li><li>万用表（监测电气参数、DEBUG用）</li><li>电机</li></ul><h1 id="VESC4-和-VESC6-的区别">VESC4 和 VESC6 的区别</h1><ul><li>VESC4 是两相分流设计，只测量电机两相线的电流，并理论计算第三相。而 VESC6 是三相分流设计，提供了更好的工作性能。</li><li>VESC6 可以处理比 VESC4 更高的持续电流。</li><li>官网提供了 VESC4 和 VESC6 的原理图，但只提供了 VESC4 的 PCB 文件。</li><li>本系列教程将基于 VESC6，在官网原理图上进行改进，替换了部分元器件。</li></ul><h1 id="VESC6-原理图分块分析">VESC6 原理图分块分析</h1><p>官网原理图：<a href="https://vesc-project.com/sites/default/files/Benjamin%20Posts/VESC_6.pdf">VESC_6.pdf</a></p><p>笔者开源原理图：<a href="">VESC6 无刷电机驱动器  电调</a></p><h2 id="核心一：MOS驱动">核心一：MOS驱动</h2><h3 id="官方原版">官方原版</h3><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/DRIVE.png" alt="DRIVE"></p><p>官网原理图中各版本的VESC都使用DRV8301作为MOS驱动芯片，其信号引脚非常多，我们可以将其分成不同部分：</p><ul><li>单片机信号脚：INH_A/B/C、INL_A/B/C，与单片机输出的 PWM signal 相连。EN_GATE，使能脚。FAULT，故障指示。</li><li>单片机SPI通信脚：nSCS、SDI、SDO、SCKL。</li><li>MOSFET信号脚：GH_A/B/C、SH_A/B/C、GL_A/B/C、SL_A/B/C、BST_A/B/C，与MOSFET各脚相连。其中 <code>G</code> 代表栅极，S代表源极，H代表高侧，L代表低侧，BST代表自举。</li></ul><p>以上为主要的信号引脚，其余关于电源的引脚在此不做详细说明，想具体了解的读者可以查阅数据手册。</p><p>数据参考自TI的数据手册：<a href="https://www.ti.com/cn/lit/ds/symlink/drv8301.pdf?ts=1744076306892&amp;ref_url=https%253A%252F%252Fso.szlcsc.com%252F">DRV8301</a></p><p>数据手册中给出的推荐应用如下图：</p><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/datasheet.png" alt="datasheet"></p><h2 id="笔者修改">笔者修改</h2><h2 id="核心二：MOSFET">核心二：MOSFET</h2>]]></content>
       
       
       <categories>
@@ -20,8 +55,6 @@
       
         <tags>
             
-            <tag> 开源 </tag>
-            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -29,6 +62,8 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
+            
+            <tag> 开源 </tag>
             
         </tags>
       
@@ -53,8 +88,6 @@
       
         <tags>
             
-            <tag> 开源 </tag>
-            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -62,6 +95,8 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
+            
+            <tag> 开源 </tag>
             
         </tags>
       
@@ -119,6 +154,8 @@
             
             <tag> 电源 </tag>
             
+            <tag> 开源 </tag>
+            
             <tag> 数控电源 </tag>
             
             <tag> 电赛 </tag>
@@ -130,8 +167,6 @@
             <tag> PID </tag>
             
             <tag> Buck-Boost </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
