@@ -20,6 +20,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -27,8 +29,6 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
@@ -90,6 +90,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -97,8 +99,6 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
@@ -111,7 +111,7 @@
       <link href="/aritcles/f48d1e60.html"/>
       <url>/aritcles/f48d1e60.html</url>
       
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1><p>本系列教程面向的是有一定软硬件基础，想要制作或使用VESC的读者。若没有任何软硬件基础或相关经验，<strong>非常不建议</strong>直接制作VESC，如果确实有使用需求，建议购买市面上现成的VESC电调。</p><blockquote><p>如何判断自己的基础是否达到？</p><ul><li>有过绘制PCB、焊接电路板的经历</li><li>有过使用STM32单片机的经历</li></ul><p>如果满足以上两条，恭喜你，可以尝试参考本教程开始制作VESC了。</p></blockquote><h1 id="什么是-VESC-？">什么是 VESC ？</h1><h2 id="介绍">介绍</h2><ul><li><p>ESC 是 Electric Speed Controller 的缩写，也就是电子调速控制器，简称电调。</p></li><li><p>VESC是一个开源的ESC，它是按照创建者 Benjamin Vedder 的名字 Vedder 来命名。</p></li><li><p>VESC 主要用于控制无刷电机，最初应用于电动滑板，但由于其高功率和开源的特性，逐渐被广泛应用于电动自行车、无人机、机器人等领域。</p></li><li><p>官网链接：<a href="https://vesc-project.com/">https://vesc-project.com/</a></p></li><li><p>作者github链接：<a href="https://github.com/vedderb">https://github.com/vedderb</a></p></li></ul><h2 id="特点">特点</h2><ul><li>开源的硬件和软件。</li><li>FOC（Field Oriented Control）控制方式。</li><li>多种通信接口：包括 PPM、UART、CAN、I2C 等。</li><li>可编程：提供上位机和源码，便于二次开发。</li><li>支持多种电机角度监测方案：包括无感、霍尔传感器、编码器、HFI等。</li></ul><h1 id="本系列教程涉及到的主要技术点">本系列教程涉及到的主要技术点</h1><h2 id="硬件">硬件</h2><ul><li>DC-DC 降压电路</li><li>MOSFET 驱动电路</li><li>电流采样电路</li><li>差分布线</li><li>地平面分割</li></ul><h2 id="软件">软件</h2><ul><li>STM32 烧录</li><li>VESC Tool 上位机使用</li><li>CAN、FDCAN 通信</li><li>CUBEMX + STM32 总线控制 VESC</li></ul><h1 id="目录">目录</h1><p>（更新中…）</p><ul><li><a href="">VESC 从零开始制作无刷电机驱动器系列</a></li><li><a href="">VESC 从零开始制作无刷电机驱动器系列（一）</a></li><li><a href="">VESC 从零开始制作无刷电机驱动器系列（二）</a></li><li><a href="">VESC 从零开始制作无刷电机驱动器系列（三）</a></li><li><a href=""></a></li><li><a href=""></a></li><li><a href=""></a></li></ul><h1 id="实物图展示">实物图展示</h1>]]></content>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1><p>本系列教程面向的是有一定软硬件基础，想要制作或使用VESC的读者。若没有任何软硬件基础或相关经验，<strong>非常不建议</strong>直接制作VESC，如果确实有使用需求，建议购买市面上现成的VESC电调。</p><blockquote><p>如何判断自己的基础是否达到？</p><ul><li>有过绘制PCB、焊接电路板的经历</li><li>有过使用STM32单片机的经历</li></ul><p>如果满足以上两条，恭喜你，可以尝试参考本教程开始制作VESC了。</p></blockquote><h1 id="什么是-VESC-？">什么是 VESC ？</h1><h2 id="介绍">介绍</h2><ul><li><p>ESC 是 Electric Speed Controller 的缩写，也就是电子调速控制器，简称电调。</p></li><li><p>VESC是一个开源的ESC，它是按照创建者 Benjamin Vedder 的名字 Vedder 来命名。</p></li><li><p>VESC 主要用于控制无刷电机，最初应用于电动滑板，但由于其高功率和开源的特性，逐渐被广泛应用于电动自行车、无人机、机器人等领域。</p></li><li><p>官网链接：<a href="https://vesc-project.com/">https://vesc-project.com/</a></p></li><li><p>作者github链接：<a href="https://github.com/vedderb">https://github.com/vedderb</a></p></li></ul><h2 id="特点">特点</h2><ul><li>开源的硬件和软件。</li><li>FOC（Field Oriented Control）控制方式。</li><li>多种通信接口：包括 PPM、UART、CAN、I2C 等。</li><li>可编程：提供上位机和源码，便于二次开发。</li><li>支持多种电机角度监测方案：包括无感、霍尔传感器、编码器、HFI等。</li></ul><h1 id="本系列教程涉及到的主要技术点">本系列教程涉及到的主要技术点</h1><h2 id="硬件">硬件</h2><ul><li>DC-DC 降压电路</li><li>MOSFET 驱动电路</li><li>电流采样电路</li><li>差分布线</li><li>地平面分割</li></ul><h2 id="软件">软件</h2><ul><li>STM32 烧录</li><li>VESC Tool 上位机使用</li><li>CAN、FDCAN 通信</li><li>CUBEMX + STM32 总线控制 VESC</li></ul><h1 id="目录">目录</h1><p>（更新中…）</p><ul><li><a href="https://poria-cocos.github.io/aritcles/f48d1e60.html">VESC 从零开始制作无刷电机驱动器系列</a></li><li><a href="https://poria-cocos.github.io/aritcles/5527aebe.html">VESC 从零开始制作无刷电机驱动器系列（一）</a></li><li><a href="https://poria-cocos.github.io/aritcles/65314266.html">VESC 从零开始制作无刷电机驱动器系列（二）</a></li></ul><!-- - [VESC 从零开始制作无刷电机驱动器系列（三）]() --><ul><li><a href=""></a></li><li><a href=""></a></li><li><a href=""></a></li></ul><h1 id="实物图展示">实物图展示</h1>]]></content>
       
       
       <categories>
@@ -123,6 +123,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -130,8 +132,6 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
@@ -187,8 +187,6 @@
       
         <tags>
             
-            <tag> 开源 </tag>
-            
             <tag> 电源 </tag>
             
             <tag> 数控电源 </tag>
@@ -202,6 +200,8 @@
             <tag> PID </tag>
             
             <tag> Buck-Boost </tag>
+            
+            <tag> 开源 </tag>
             
         </tags>
       
