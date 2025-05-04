@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>VESC 从零开始制作无刷电机驱动器系列（三）</title>
+      <link href="/aritcles/282fe134.html"/>
+      <url>/aritcles/282fe134.html</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>这一章将介绍 VESC TOOL 上位机的主要参数、功能。</p><p>笔者会优先介绍重要和常用的部分，几乎不用的部分会省略。</p><p>若未特别说明，本文电机转速均指电转速，并非输出轴的实际机械转速。</p><p>由于笔者使用的电机驱动IC无通信功能，所以有关故障报错的功能将会省略。</p></blockquote><h1 id="页面各部分介绍">页面各部分介绍</h1><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/tool1.png" alt="tool1"></p><h1 id="Motor-Settings">Motor Settings</h1><h2 id="General">General</h2><h3 id="General-2">General</h3><ul><li>Invert Motor Direction：修改电机正反向定义</li><li>Sensor Port Mode：电机旋转情况的反馈传感器选择</li></ul><h3 id="Current">Current</h3><ul><li>Motor Current Max：最大驱动电机电流，需考虑电机承受电流能力</li><li>Motor Current Max Brake：最大制动电机电流，需考虑电池吸收电流能力</li><li>Absolute Maximum Current：极限电流，超出后会返回错误，通常会设置的尽可能大</li><li>Battery Current Max：最大电池输出电流</li><li>Battery Current Max Regen：最大电池回馈电流，需考虑电池吸收电流能力</li></ul><h3 id="Voltage">Voltage</h3><ul><li>Battery Voltage Cutoff Start：电池保护起始电压，低于此电压开始限制输出电流，需根据电池实际电压设置</li><li>Battery Voltage Cutoff End：电池保护结束电压，低于此电压停止输出电流，需根据电池实际电压设置</li></ul><h3 id="RPM">RPM</h3><ul><li>Max ERPM/Max ERPM Reverse：电机最大转速，需根据电机数据手册设置</li></ul><h3 id="Advanced">Advanced</h3><ul><li>Minimum Input Voltage：电池欠压保护</li><li>Maximum Input Voltage：电池过压保护</li><li>Minimum Duty Cycle：最小驱动占空比</li><li>Maximum Duty Cycle：最大驱动占空比</li><li>Minimum Current：最小驱动电流</li></ul><h2 id="FOC">FOC</h2><h3 id="General-3">General</h3><ul><li>Sensor Mode：电机旋转情况的反馈传感器选择</li><li>Motor Resistance ®、Motor Inductance (L)、Motor Flux Linkage (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi></mrow><annotation encoding="application/x-tex">{\lambda}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord mathnormal">λ</span></span></span></span></span>)、Current KP、Current KI：标定出的参数</li></ul><blockquote><p>后面的几个页面是不同的传感器参数标定、修改页面。</p></blockquote><h2 id="PID-Controllers">PID Controllers</h2><ul><li>Minimum ERPM：最小电机转速，小于此值将不进行转速控制</li><li>Allow Braking：是否允许制动</li><li>Ramp eRPMs per second：电机转速爬升率，-1表示无限制。为了安全、减小电调/电池压力，此参数尽量根据实际使用情况给一个限制，不要使用-1</li><li>Position Controller：进行位置环控制时，PID参数需要用户自行调整</li></ul><h2 id="Experiments">Experiments</h2><ul><li>进行自定义的电机控制实验</li></ul><h1 id="APP-Settings">APP Settings</h1><h2 id="General-4">General</h2><ul><li>APP to Use：使用的预设</li><li>VESC ID：电调的id，多电调配置时必须设置，每个电调的id应不同</li><li>Can Status Message Mode：CAN返回报文的信息（详细内容见CAN控制篇）</li><li>Can Status Rate：CAN返回报文的频率</li><li>CAN Baud Rate：CAN波特率</li></ul><h1 id="Data-Analysis">Data Analysis</h1><h2 id="Realtime-Data">Realtime Data</h2><ul><li>电调实时数据采集、显示</li><li>点击最右侧的<code>RT</code>按钮开启功能</li></ul><h1 id=""></h1><!-- flag of hidden posts -->]]></content>
+      
+      
+      <categories>
+          
+          <category> VESC </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 开源 </tag>
+            
+            <tag> VESC </tag>
+            
+            <tag> FOC </tag>
+            
+            <tag> 无刷电机 </tag>
+            
+            <tag> ROBOCON </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>VESC 从零开始制作无刷电机驱动器系列（二）</title>
       <link href="/aritcles/65314266.html"/>
       <url>/aritcles/65314266.html</url>
@@ -111,7 +144,7 @@
       <link href="/aritcles/f48d1e60.html"/>
       <url>/aritcles/f48d1e60.html</url>
       
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1><p>本系列教程面向的是有一定软硬件基础，想要制作或使用VESC的读者。若没有任何软硬件基础或相关经验，<strong>非常不建议</strong>直接制作VESC，如果确实有使用需求，建议购买市面上现成的VESC电调。</p><blockquote><p>如何判断自己的基础是否达到？</p><ul><li>有过绘制PCB、焊接电路板的经历</li><li>有过使用STM32单片机的经历</li></ul><p>如果满足以上两条，恭喜你，可以尝试参考本教程开始制作VESC了。</p></blockquote><h1 id="什么是-VESC-？">什么是 VESC ？</h1><h2 id="介绍">介绍</h2><ul><li><p>ESC 是 Electric Speed Controller 的缩写，也就是电子调速控制器，简称电调。</p></li><li><p>VESC是一个开源的ESC，它是按照创建者 Benjamin Vedder 的名字 Vedder 来命名。</p></li><li><p>VESC 主要用于控制无刷电机，最初应用于电动滑板，但由于其高功率和开源的特性，逐渐被广泛应用于电动自行车、无人机、机器人等领域。</p></li><li><p>官网链接：<a href="https://vesc-project.com/">https://vesc-project.com/</a></p></li><li><p>作者github链接：<a href="https://github.com/vedderb">https://github.com/vedderb</a></p></li></ul><h2 id="特点">特点</h2><ul><li>开源的硬件和软件。</li><li>FOC（Field Oriented Control）控制方式。</li><li>多种通信接口：包括 PPM、UART、CAN、I2C 等。</li><li>可编程：提供上位机和源码，便于二次开发。</li><li>支持多种电机角度监测方案：包括无感、霍尔传感器、编码器、HFI等。</li></ul><h1 id="本系列教程涉及到的主要技术点">本系列教程涉及到的主要技术点</h1><h2 id="硬件">硬件</h2><ul><li>DC-DC 降压电路</li><li>MOSFET 驱动电路</li><li>电流采样电路</li><li>差分布线</li><li>地平面分割</li></ul><h2 id="软件">软件</h2><ul><li>STM32 烧录</li><li>VESC Tool 上位机使用</li><li>CAN、FDCAN 通信</li><li>CUBEMX + STM32 总线控制 VESC</li></ul><h1 id="目录">目录</h1><p>（更新中…）</p><ul><li><a href="https://poria-cocos.github.io/aritcles/f48d1e60.html">VESC 从零开始制作无刷电机驱动器系列</a></li><li><a href="https://poria-cocos.github.io/aritcles/5527aebe.html">VESC 从零开始制作无刷电机驱动器系列（一）</a></li><li><a href="https://poria-cocos.github.io/aritcles/65314266.html">VESC 从零开始制作无刷电机驱动器系列（二）</a></li></ul><!-- - [VESC 从零开始制作无刷电机驱动器系列（三）]() --><ul><li><a href=""></a></li><li><a href=""></a></li><li><a href=""></a></li></ul><h1 id="实物图展示">实物图展示</h1>]]></content>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1><p>本系列教程面向的是有一定软硬件基础，想要制作或使用VESC的读者。若没有任何软硬件基础或相关经验，<strong>非常不建议</strong>直接制作VESC，如果确实有使用需求，建议购买市面上现成的VESC电调。</p><blockquote><p>如何判断自己的基础是否达到？</p><ul><li>有过绘制PCB、焊接电路板的经历</li><li>有过使用STM32单片机的经历</li></ul><p>如果满足以上两条，恭喜你，可以尝试参考本教程开始制作VESC了。</p></blockquote><h1 id="什么是-VESC-？">什么是 VESC ？</h1><h2 id="介绍">介绍</h2><ul><li><p>ESC 是 Electric Speed Controller 的缩写，也就是电子调速控制器，简称电调。</p></li><li><p>VESC是一个开源的ESC，它是按照创建者 Benjamin Vedder 的名字 Vedder 来命名。</p></li><li><p>VESC 主要用于控制无刷电机，最初应用于电动滑板，但由于其高功率和开源的特性，逐渐被广泛应用于电动自行车、无人机、机器人等领域。</p></li><li><p>官网链接：<a href="https://vesc-project.com/">https://vesc-project.com/</a></p></li><li><p>作者github链接：<a href="https://github.com/vedderb">https://github.com/vedderb</a></p></li></ul><h2 id="特点">特点</h2><ul><li>开源的硬件和软件。</li><li>FOC（Field Oriented Control）控制方式。</li><li>多种通信接口：包括 PPM、UART、CAN、I2C 等。</li><li>可编程：提供上位机和源码，便于二次开发。</li><li>支持多种电机角度监测方案：包括无感、霍尔传感器、编码器、HFI等。</li></ul><h1 id="本系列教程涉及到的主要技术点">本系列教程涉及到的主要技术点</h1><h2 id="硬件">硬件</h2><ul><li>DC-DC 降压电路</li><li>MOSFET 驱动电路</li><li>电流采样电路</li><li>差分布线</li><li>地平面分割</li></ul><h2 id="软件">软件</h2><ul><li>STM32 烧录</li><li>VESC Tool 上位机使用</li><li>CAN、FDCAN 通信</li><li>CUBEMX + STM32 总线控制 VESC</li></ul><h1 id="目录">目录</h1><p>（更新中…）</p><ul><li><a href="https://poria-cocos.github.io/aritcles/f48d1e60.html">VESC 从零开始制作无刷电机驱动器系列</a></li><li><a href="https://poria-cocos.github.io/aritcles/5527aebe.html">VESC 从零开始制作无刷电机驱动器系列（一）</a></li><li><a href="https://poria-cocos.github.io/aritcles/65314266.html">VESC 从零开始制作无刷电机驱动器系列（二）</a></li></ul><!-- - [VESC 从零开始制作无刷电机驱动器系列（三）]() --><ul><li><a href=""></a></li><li><a href=""></a></li><li><a href=""></a></li></ul><h1 id="实物图展示">实物图展示</h1><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/pic.jpg" alt="pic"></p><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/pic1.jpg" alt="pic1"></p>]]></content>
       
       
       <categories>
