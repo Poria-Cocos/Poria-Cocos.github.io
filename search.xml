@@ -8,7 +8,7 @@
       <link href="/aritcles/282fe134.html"/>
       <url>/aritcles/282fe134.html</url>
       
-        <content type="html"><![CDATA[<blockquote><p>这一章将介绍 VESC TOOL 上位机的主要参数、功能。</p><p>笔者会优先介绍重要和常用的部分，几乎不用的部分会省略。</p><p>若未特别说明，本文电机转速均指电转速，并非输出轴的实际机械转速。</p><p>由于笔者使用的电机驱动IC无通信功能，所以有关故障报错的功能将会省略。</p></blockquote><h1 id="页面各部分介绍">页面各部分介绍</h1><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/tool1.png" alt="tool1"></p><h1 id="Motor-Settings">Motor Settings</h1><h2 id="General">General</h2><h3 id="General-2">General</h3><ul><li>Invert Motor Direction：修改电机正反向定义</li><li>Sensor Port Mode：电机旋转情况的反馈传感器选择</li></ul><h3 id="Current">Current</h3><ul><li>Motor Current Max：最大驱动电机电流，需考虑电机承受电流能力</li><li>Motor Current Max Brake：最大制动电机电流，需考虑电池吸收电流能力</li><li>Absolute Maximum Current：极限电流，超出后会返回错误，通常会设置的尽可能大</li><li>Battery Current Max：最大电池输出电流</li><li>Battery Current Max Regen：最大电池回馈电流，需考虑电池吸收电流能力</li></ul><h3 id="Voltage">Voltage</h3><ul><li>Battery Voltage Cutoff Start：电池保护起始电压，低于此电压开始限制输出电流，需根据电池实际电压设置</li><li>Battery Voltage Cutoff End：电池保护结束电压，低于此电压停止输出电流，需根据电池实际电压设置</li></ul><h3 id="RPM">RPM</h3><ul><li>Max ERPM/Max ERPM Reverse：电机最大转速，需根据电机数据手册设置</li></ul><h3 id="Advanced">Advanced</h3><ul><li>Minimum Input Voltage：电池欠压保护</li><li>Maximum Input Voltage：电池过压保护</li><li>Minimum Duty Cycle：最小驱动占空比</li><li>Maximum Duty Cycle：最大驱动占空比</li><li>Minimum Current：最小驱动电流</li></ul><h2 id="FOC">FOC</h2><h3 id="General-3">General</h3><ul><li>Sensor Mode：电机旋转情况的反馈传感器选择</li><li>Motor Resistance ®、Motor Inductance (L)、Motor Flux Linkage (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi></mrow><annotation encoding="application/x-tex">{\lambda}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord mathnormal">λ</span></span></span></span></span>)、Current KP、Current KI：标定出的参数</li></ul><blockquote><p>后面的几个页面是不同的传感器参数标定、修改页面。</p></blockquote><h2 id="PID-Controllers">PID Controllers</h2><ul><li>Minimum ERPM：最小电机转速，小于此值将不进行转速控制</li><li>Allow Braking：是否允许制动</li><li>Ramp eRPMs per second：电机转速爬升率，-1表示无限制。为了安全、减小电调/电池压力，此参数尽量根据实际使用情况给一个限制，不要使用-1</li><li>Position Controller：进行位置环控制时，PID参数需要用户自行调整</li></ul><h2 id="Experiments">Experiments</h2><ul><li>进行自定义的电机控制实验</li></ul><h1 id="APP-Settings">APP Settings</h1><h2 id="General-4">General</h2><ul><li>APP to Use：使用的预设</li><li>VESC ID：电调的id，多电调配置时必须设置，每个电调的id应不同</li><li>Can Status Message Mode：CAN返回报文的信息（详细内容见CAN控制篇）</li><li>Can Status Rate：CAN返回报文的频率</li><li>CAN Baud Rate：CAN波特率</li></ul><h1 id="Data-Analysis">Data Analysis</h1><h2 id="Realtime-Data">Realtime Data</h2><ul><li>电调实时数据采集、显示</li><li>点击最右侧的<code>RT</code>按钮开启功能</li></ul><h1 id=""></h1><!-- flag of hidden posts -->]]></content>
+        <content type="html"><![CDATA[<blockquote><p>本章将介绍 VESC TOOL 上位机的主要参数与功能。</p><p>笔者优先介绍重要和常用的部分，几乎不用的部分将省略。</p><p>若未特别说明，本文中的电机转速均指电转速，而非输出轴的实际机械转速。</p><p>由于笔者使用的电机驱动 IC 无通信功能，有关故障报错的功能将不作介绍。</p></blockquote><h1 id="页面各部分介绍">页面各部分介绍</h1><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/tool1.png" alt="tool1"></p><h1 id="Motor-Settings">Motor Settings</h1><h2 id="General">General</h2><h3 id="General-2">General</h3><ul><li><strong>Invert Motor Direction</strong>：修改电机正反向定义。</li><li><strong>Sensor Port Mode</strong>：选择电机旋转情况的反馈传感器。</li></ul><h3 id="Current">Current</h3><ul><li><strong>Motor Current Max</strong>：最大驱动电机电流，需考虑电机的承受电流能力。</li><li><strong>Motor Current Max Brake</strong>：最大制动电机电流，需考虑电池的吸收电流能力。</li><li><strong>Absolute Maximum Current</strong>：极限电流，超出后会返回错误，通常设置为尽可能大的值。</li><li><strong>Battery Current Max</strong>：最大电池输出电流。</li><li><strong>Battery Current Max Regen</strong>：最大电池回馈电流，需考虑电池的吸收电流能力。</li></ul><h3 id="Voltage">Voltage</h3><ul><li><strong>Battery Voltage Cutoff Start</strong>：电池保护起始电压，低于此电压时开始限制输出电流，需根据电池实际电压设置。</li><li><strong>Battery Voltage Cutoff End</strong>：电池保护结束电压，低于此电压时停止输出电流，需根据电池实际电压设置。</li></ul><h3 id="RPM">RPM</h3><ul><li><strong>Max ERPM/Max ERPM Reverse</strong>：电机最大转速，需根据电机数据手册设置。</li></ul><h3 id="Advanced">Advanced</h3><ul><li><strong>Minimum Input Voltage</strong>：电池欠压保护。</li><li><strong>Maximum Input Voltage</strong>：电池过压保护。</li><li><strong>Minimum Duty Cycle</strong>：最小驱动占空比。</li><li><strong>Maximum Duty Cycle</strong>：最大驱动占空比。</li><li><strong>Minimum Current</strong>：最小驱动电流。</li></ul><h2 id="FOC">FOC</h2><h3 id="General-3">General</h3><ul><li><strong>Sensor Mode</strong>：选择电机旋转情况的反馈传感器。</li><li><strong>Motor Resistance ®</strong>、<strong>Motor Inductance (L)</strong>、<strong>Motor Flux Linkage (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi></mrow><annotation encoding="application/x-tex">{\lambda}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord mathnormal">λ</span></span></span></span></span>)</strong>、<strong>Current KP</strong>、<strong>Current KI</strong>：自动标定出的参数，不可随意更改，特殊需求时可能需要手动修改。</li></ul><blockquote><p>General下的其他几个页面是不同的传感器参数标定、修改页面。</p></blockquote><h2 id="PID-Controllers">PID Controllers</h2><ul><li><strong>Minimum ERPM</strong>：最小电机转速，小于此值时将不进行转速控制。</li><li><strong>Allow Braking</strong>：是否允许制动。</li><li><strong>Ramp eRPMs per second</strong>：电机转速爬升率，<code>-1</code> 表示无限制。为安全起见并减小电调/电池压力，应根据实际使用情况设置限制值，不建议使用 <code>-1</code>。</li><li><strong>Position Controller</strong>：进行位置环控制时，需用户自行调整 PID 参数。</li></ul><h2 id="Experiments">Experiments</h2><ul><li>进行自定义的电机控制实验</li></ul><h1 id="APP-Settings">APP Settings</h1><h2 id="General-4">General</h2><ul><li><strong>APP to Use</strong>：选择使用的预设。</li><li><strong>VESC ID</strong>：电调的 ID，多电调配置时必须设置，每个电调的 ID 应不同。</li><li><strong>Can Status Message Mode</strong>：CAN 返回报文的信息（详细内容见 CAN 控制篇）。</li><li><strong>Can Status Rate</strong>：CAN 返回报文的频率。</li><li><strong>CAN Baud Rate</strong>：CAN 波特率。</li></ul><h1 id="Data-Analysis">Data Analysis</h1><h2 id="Realtime-Data">Realtime Data</h2><ul><li>电调实时数据采集与显示。</li><li>点击最右侧的 <code>RT</code> 按钮开启功能。</li><li>常用界面包括 <strong>Current</strong> 和 <strong>RPM</strong>。</li></ul><!-- flag of hidden posts -->]]></content>
       
       
       <categories>
@@ -20,8 +20,6 @@
       
         <tags>
             
-            <tag> 开源 </tag>
-            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -29,6 +27,8 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
+            
+            <tag> 开源 </tag>
             
         </tags>
       
@@ -41,7 +41,7 @@
       <link href="/aritcles/65314266.html"/>
       <url>/aritcles/65314266.html</url>
       
-        <content type="html"><![CDATA[<blockquote><p>这一章将介绍 VESC 硬件的 PCB 部分，分享布线经验。</p></blockquote><h1 id="PCB设计">PCB设计</h1><h2 id="辅助电源">辅助电源</h2><p>12V 和 5V 两部分所需电流都不大，布线时应优先考虑以下几点：</p><ul><li>减小电感面积。</li><li>减小高频部分铺铜面积。</li></ul><p>这样可以有效降低对其他重要信号的干扰。</p><h2 id="采样信号">采样信号</h2><p>采样部分需要特别注意电流采样，建议：</p><ul><li>采用差分走线。</li><li>避开辅助电源的高频部分。</li></ul><p>没有相关经验的读者建议阅读电流采样 layout 相关的文章。</p><p><strong>注意</strong>：如果模拟部分和数字部分分开供电，应提前规划电流采样放大器等元件的排布，避免后续分割地时出现问题。</p><h2 id="MOS-驱动">MOS 驱动</h2><ul><li>FD6288Q 与 MOSFET 间的连接走线应尽量短且适当加宽。</li><li>6 颗二极管和自举电容应尽量靠近 FD6288Q。</li></ul><h2 id="敏感信号">敏感信号</h2><p>在本设计中，USB、CAN、SWDIO/SWCLK 属于敏感信号，走线时应注意：</p><ul><li>避开辅助电源的高频部分、MOS 驱动信号部分、功率地部分。</li><li>USB 和 CAN 信号应走差分线。</li></ul><p><strong>提示</strong>：若处理不当，可能会导致以下问题：</p><ul><li>校准/驱动电机时 USB 断连。</li><li>CAN 信号受干扰，导致上位 STM32 主动关闭 CAN 收发。</li><li>烧录固件对电源质量要求高。</li></ul><h1 id="焊接调试">焊接调试</h1><blockquote><p>以下为笔者推荐的焊接顺序，有经验的读者也可按照自己的经验焊接。</p></blockquote><ol><li><strong>焊接电源部分</strong>：测试输出电压（务必先焊接共地的 0R 电阻！）。</li><li><strong>焊接单片机相关部分</strong>：连接 ST-Link，打开 Keil 任意工程，点击 -&gt; 魔术棒 -&gt; DEBUG -&gt; Settings，观察是否能读取到芯片（此步可跳过）。</li><li><strong>烧录固件</strong>：推荐使用 STM32CubeProgrammer，若出现问题可尝试 ST-Link Utility。正常烧录成功的表现为红灯闪烁，功耗约 1.5W。</li><li><strong>焊接 USB 部分</strong>：电脑安装驱动并打开上位机，点击 AutoConnect，连接 VESC。</li><li><strong>焊接其余部分</strong>：全部完成后上电，观察功耗，确保工作正常。</li><li><strong>测试波形</strong>：<ul><li>将示波器探头分别置于 GHA（GLA、GHB、GLB、GHC、GLC）网络，依次点击 FOC &gt; RL &gt; OK，测量波形应形似方波。（点击OK后大约只输出1s，所以要提前调好示波器，或使用示波器的STOP）<br><img src="https://img-host-3w9.pages.dev/img/article/VESC/2-1.png" alt="2-1"></li><li>将示波器 CH1 和 CH2 分别置于 GHAH 和 GLA（GHB 和 GLB、GHC 和 GLC）网络，依次点击 FOC &gt; RL &gt; OK，应观测到两个方波中的高电平先向低电平降低，低电平再向高电平升高，确保两个管不会同时导通。</li></ul></li></ol><p><strong>注意</strong>：若任何一步出现问题，为安全起见，<strong>绝不可</strong>进入下一步！</p><ol start="7"><li><strong>连接电机</strong>：<ul><li>选择 Welcome &amp; Wizards &gt; Setup Motors FOC，根据实际电机选择合适的型号（建议从偏小的型号开始，避免烧毁电机）。笔者使用的 5065 轮毂电机选择了 ~750g。<br><img src="https://img-host-3w9.pages.dev/img/article/VESC/2-2.png" alt="2-2"></li><li>-&gt; Next：选择对应的电源电压，笔者选择了 6 串（3.0~4.2 * 6 = 18.0~25.2），对应标称 24V 的航模电池。<br><img src="https://img-host-3w9.pages.dev/img/article/VESC/2-3.png" alt="2-3"></li><li>-&gt; Next：通常选择直驱模式，然后根据单个 VESC（no CAN）或多个 VESC 通过 CAN 线连接选择不同的 Run。<br><img src="https://img-host-3w9.pages.dev/img/article/VESC/2-4.png" alt="2-4"></li><li>-&gt; Run：运行后，上位机开始标定参数，电机开始转动。<strong>注意</strong>：确保电源限流充足，同时务必固定好电机底座！</li></ul></li></ol><blockquote><p>至此，初次焊接调试流程已完成。</p></blockquote><h2 id="常见问题">常见问题</h2><ul><li><strong>DCDC 输出异常（如 21V）</strong>：检查共地 0R 电阻是否焊接。</li><li><strong>Keil 显示 no target</strong>：检查 A3V3 部分是否焊接。</li><li><strong>STM32CubeProgrammer 中 ST-Link 名称异常</strong>：如显示单字符 7、D 等，更换 ST-Link，可能需要使用国外进口芯片的 ST-Link，直到显示一长串字符。</li><li><strong>烧录多次失败/运行失败/校验失败</strong>：检查 SWDIO/SWCLK 引脚连通性及硬件问题，更换高质量电源，必要时用 ST-Link Utility 擦除 flash 后重新烧录。</li><li><strong>USB 无法连接</strong>：观察功耗和红色 LED 状态，判断固件是否成功运行。检查 USB 信号线上的 22R 电阻是否焊接。</li></ul><h1 id="结尾">结尾</h1><p>本章主要分享了 PCB layout 和焊接调试的经验。笔者也是第一次设计电机驱动器，难免有疏漏之处，若有疑问或建议，欢迎通过邮件联系笔者。</p><p>下一章将介绍 VESC TOOL 的功能，并分享一些基础使用教程。</p><!-- flag of hidden posts -->]]></content>
+        <content type="html"><![CDATA[<blockquote><p>这一章将介绍 VESC 硬件的 PCB 部分，分享布线经验。</p></blockquote><h1 id="PCB设计">PCB设计</h1><h2 id="辅助电源">辅助电源</h2><p>12V 和 5V 两部分所需电流都不大，布线时应优先考虑以下几点：</p><ul><li>减小电感面积。</li><li>减小高频部分铺铜面积。</li></ul><p>这样可以有效降低对其他重要信号的干扰。</p><h2 id="采样信号">采样信号</h2><p>采样部分需要特别注意电流采样，建议：</p><ul><li>采用差分走线。</li><li>避开辅助电源的高频部分。</li></ul><p>没有相关经验的读者建议阅读电流采样 layout 相关的文章。</p><p><strong>注意</strong>：如果模拟部分和数字部分分开供电，应提前规划电流采样放大器等元件的排布，避免后续分割地时出现问题。</p><h2 id="MOS-驱动">MOS 驱动</h2><ul><li>FD6288Q 与 MOSFET 间的连接走线应尽量短且适当加宽。</li><li>6 颗二极管和自举电容应尽量靠近 FD6288Q。</li></ul><h2 id="敏感信号">敏感信号</h2><p>在本设计中，USB、CAN、SWDIO/SWCLK 属于敏感信号，走线时应注意：</p><ul><li>避开辅助电源的高频部分、MOS 驱动信号部分、功率地部分。</li><li>USB 和 CAN 信号应走差分线。</li></ul><p><strong>提示</strong>：若处理不当，可能会导致以下问题：</p><ul><li>校准/驱动电机时 USB 断连。</li><li>CAN 信号受干扰，导致上位 STM32 主动关闭 CAN 收发。</li><li>烧录固件对电源质量要求高。</li></ul><h1 id="焊接调试">焊接调试</h1><blockquote><p>以下为笔者推荐的焊接顺序，有经验的读者也可按照自己的经验焊接。</p></blockquote><ol><li><strong>焊接电源部分</strong>：测试输出电压（务必先焊接共地的 0R 电阻！）。</li><li><strong>焊接单片机相关部分</strong>：连接 ST-Link，打开 Keil 任意工程，点击 -&gt; 魔术棒 -&gt; DEBUG -&gt; Settings，观察是否能读取到芯片（此步可跳过）。</li><li><strong>烧录固件</strong>：推荐使用 STM32CubeProgrammer，若出现问题可尝试 ST-Link Utility。正常烧录成功的表现为红灯闪烁，功耗约 1.5W。</li><li><strong>焊接 USB 部分</strong>：电脑安装驱动并打开上位机，点击 AutoConnect，连接 VESC。</li><li><strong>焊接其余部分</strong>：全部完成后上电，观察功耗，确保工作正常。</li><li><strong>测试波形</strong>：<ul><li>将示波器探头分别置于 GHA（GLA、GHB、GLB、GHC、GLC）网络，依次点击 FOC &gt; RL &gt; OK，测量波形应形似方波。（点击OK后大约只输出1s，所以要提前调好示波器，或使用示波器的STOP）<br><img src="https://img-host-3w9.pages.dev/img/article/VESC/2-1.png" alt="2-1"></li><li>将示波器 CH1 和 CH2 分别置于 GHA 和 GLA（GHB 和 GLB、GHC 和 GLC）网络，依次点击 FOC &gt; RL &gt; OK，应观测到两个方波中的高电平先向低电平降低，低电平再向高电平升高，确保两个管不会同时导通。</li></ul></li></ol><p><strong>注意</strong>：若任何一步出现问题，为安全起见，<strong>绝不可</strong>进入下一步！</p><ol start="7"><li><strong>连接电机</strong>：<ul><li>选择 Welcome &amp; Wizards &gt; Setup Motors FOC，根据实际电机选择合适的型号（建议从偏小的型号开始，避免烧毁电机）。笔者使用的 5065 轮毂电机选择了 ~750g。<br><img src="https://img-host-3w9.pages.dev/img/article/VESC/2-2.png" alt="2-2"></li><li>-&gt; Next：选择对应的电源电压，笔者选择了 6 串（3.0~4.2 * 6 = 18.0~25.2），对应标称 24V 的航模电池。<br><img src="https://img-host-3w9.pages.dev/img/article/VESC/2-3.png" alt="2-3"></li><li>-&gt; Next：通常选择直驱模式，然后根据单个 VESC（no CAN）或多个 VESC 通过 CAN 线连接选择不同的 Run。<br><img src="https://img-host-3w9.pages.dev/img/article/VESC/2-4.png" alt="2-4"></li><li>-&gt; Run：运行后，上位机开始标定参数，电机开始转动。<strong>注意</strong>：确保电源限流充足，同时务必固定好电机底座！</li></ul></li></ol><blockquote><p>至此，初次焊接调试流程已完成。</p></blockquote><h2 id="常见问题">常见问题</h2><ul><li><strong>DCDC 输出异常（如 21V）</strong>：检查共地 0R 电阻是否焊接。</li><li><strong>Keil 显示 no target</strong>：检查 A3V3 部分是否焊接。</li><li><strong>STM32CubeProgrammer 中 ST-Link 名称异常</strong>：如显示单字符 7、D 等，更换 ST-Link，可能需要使用国外进口芯片的 ST-Link，直到显示一长串字符。</li><li><strong>烧录多次失败/运行失败/校验失败</strong>：检查 SWDIO/SWCLK 引脚连通性及硬件问题，更换高质量电源，必要时用 ST-Link Utility 擦除 flash 后重新烧录。</li><li><strong>USB 无法连接</strong>：观察功耗和红色 LED 状态，判断固件是否成功运行。检查 USB 信号线上的 22R 电阻是否焊接。</li></ul><h1 id="结尾">结尾</h1><p>本章主要分享了 PCB layout 和焊接调试的经验。笔者也是第一次设计电机驱动器，难免有疏漏之处，若有疑问或建议，欢迎通过邮件联系笔者。</p><p>下一章将介绍 VESC TOOL 的功能，并分享一些基础使用教程。</p><!-- flag of hidden posts -->]]></content>
       
       
       <categories>
@@ -53,8 +53,6 @@
       
         <tags>
             
-            <tag> 开源 </tag>
-            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -62,6 +60,8 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
+            
+            <tag> 开源 </tag>
             
         </tags>
       
@@ -123,8 +123,6 @@
       
         <tags>
             
-            <tag> 开源 </tag>
-            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -132,6 +130,8 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
+            
+            <tag> 开源 </tag>
             
         </tags>
       
@@ -144,7 +144,7 @@
       <link href="/aritcles/f48d1e60.html"/>
       <url>/aritcles/f48d1e60.html</url>
       
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1><p>本系列教程面向的是有一定软硬件基础，想要制作或使用VESC的读者。若没有任何软硬件基础或相关经验，<strong>非常不建议</strong>直接制作VESC，如果确实有使用需求，建议购买市面上现成的VESC电调。</p><blockquote><p>如何判断自己的基础是否达到？</p><ul><li>有过绘制PCB、焊接电路板的经历</li><li>有过使用STM32单片机的经历</li></ul><p>如果满足以上两条，恭喜你，可以尝试参考本教程开始制作VESC了。</p></blockquote><h1 id="什么是-VESC-？">什么是 VESC ？</h1><h2 id="介绍">介绍</h2><ul><li><p>ESC 是 Electric Speed Controller 的缩写，也就是电子调速控制器，简称电调。</p></li><li><p>VESC是一个开源的ESC，它是按照创建者 Benjamin Vedder 的名字 Vedder 来命名。</p></li><li><p>VESC 主要用于控制无刷电机，最初应用于电动滑板，但由于其高功率和开源的特性，逐渐被广泛应用于电动自行车、无人机、机器人等领域。</p></li><li><p>官网链接：<a href="https://vesc-project.com/">https://vesc-project.com/</a></p></li><li><p>作者github链接：<a href="https://github.com/vedderb">https://github.com/vedderb</a></p></li></ul><h2 id="特点">特点</h2><ul><li>开源的硬件和软件。</li><li>FOC（Field Oriented Control）控制方式。</li><li>多种通信接口：包括 PPM、UART、CAN、I2C 等。</li><li>可编程：提供上位机和源码，便于二次开发。</li><li>支持多种电机角度监测方案：包括无感、霍尔传感器、编码器、HFI等。</li></ul><h1 id="本系列教程涉及到的主要技术点">本系列教程涉及到的主要技术点</h1><h2 id="硬件">硬件</h2><ul><li>DC-DC 降压电路</li><li>MOSFET 驱动电路</li><li>电流采样电路</li><li>差分布线</li><li>地平面分割</li></ul><h2 id="软件">软件</h2><ul><li>STM32 烧录</li><li>VESC Tool 上位机使用</li><li>CAN、FDCAN 通信</li><li>CUBEMX + STM32 总线控制 VESC</li></ul><h1 id="目录">目录</h1><p>（更新中…）</p><ul><li><a href="https://poria-cocos.github.io/aritcles/f48d1e60.html">VESC 从零开始制作无刷电机驱动器系列</a></li><li><a href="https://poria-cocos.github.io/aritcles/5527aebe.html">VESC 从零开始制作无刷电机驱动器系列（一）</a></li><li><a href="https://poria-cocos.github.io/aritcles/65314266.html">VESC 从零开始制作无刷电机驱动器系列（二）</a></li></ul><!-- - [VESC 从零开始制作无刷电机驱动器系列（三）]() --><ul><li><a href=""></a></li><li><a href=""></a></li><li><a href=""></a></li></ul><h1 id="实物图展示">实物图展示</h1><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/pic.jpg" alt="pic"></p><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/pic1.jpg" alt="pic1"></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="目录">目录</h1><p>（更新中…）</p><ul><li><a href="https://poria-cocos.github.io/aritcles/f48d1e60.html">VESC 从零开始制作无刷电机驱动器系列</a></li><li><a href="https://poria-cocos.github.io/aritcles/5527aebe.html">VESC 从零开始制作无刷电机驱动器系列（一）</a></li><li><a href="https://poria-cocos.github.io/aritcles/65314266.html">VESC 从零开始制作无刷电机驱动器系列（二）</a></li><li><a href="https://poria-cocos.github.io/aritcles/282fe134.html">VESC 从零开始制作无刷电机驱动器系列（三）</a></li><li><a href=""> </a></li></ul><h1 id="前言">前言</h1><p>本系列教程面向的是有一定软硬件基础，想要制作或使用VESC的读者。若没有任何软硬件基础或相关经验，<strong>非常不建议</strong>直接制作VESC，如果确实有使用需求，建议购买市面上现成的VESC电调。</p><blockquote><p>如何判断自己的基础是否达到？</p><ul><li>有过绘制PCB、焊接电路板的经历</li><li>有过使用STM32单片机的经历</li><li>有过使用无刷电机的经历</li></ul><p>如果满足以上两条，恭喜你，可以尝试参考本教程开始制作VESC了。</p></blockquote><h1 id="什么是-VESC-？">什么是 VESC ？</h1><h2 id="介绍">介绍</h2><ul><li><p>ESC 是 Electric Speed Controller 的缩写，也就是电子调速控制器，简称电调。</p></li><li><p>VESC是一个开源的ESC，它是按照创建者 Benjamin Vedder 的名字 Vedder 来命名。</p></li><li><p>VESC 主要用于控制无刷电机，最初应用于电动滑板，但由于其高功率和开源的特性，逐渐被广泛应用于电动自行车、无人机、机器人等领域。</p></li><li><p>官网链接：<a href="https://vesc-project.com/">https://vesc-project.com/</a></p></li><li><p>原作者github链接：<a href="https://github.com/vedderb">https://github.com/vedderb</a></p></li></ul><h2 id="特点">特点</h2><ul><li>开源的硬件和软件。</li><li>FOC（Field Oriented Control）控制方式。</li><li>多种通信接口：包括 PPM、UART、CAN、I2C 等。</li><li>可编程：提供上位机和源码，便于二次开发。</li><li>支持多种电机角度监测方案：包括无感、霍尔传感器、编码器、HFI等。</li></ul><h1 id="本系列教程涉及到的主要技术点">本系列教程涉及到的主要技术点</h1><h2 id="硬件">硬件</h2><ul><li>DC-DC 降压电路</li><li>MOSFET 驱动电路</li><li>电流采样电路</li><li>差分布线</li><li>地平面分割</li></ul><h2 id="软件">软件</h2><ul><li>STM32 烧录</li><li>VESC Tool 上位机使用</li><li>CAN、FDCAN 通信</li><li>CUBEMX + STM32 总线控制 VESC</li></ul><h1 id="实物图展示">实物图展示</h1><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/pic.jpg" alt="pic"></p><p><img src="https://img-host-3w9.pages.dev/img/article/VESC/pic1.jpg" alt="pic1"></p>]]></content>
       
       
       <categories>
@@ -156,8 +156,6 @@
       
         <tags>
             
-            <tag> 开源 </tag>
-            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -165,6 +163,8 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
+            
+            <tag> 开源 </tag>
             
         </tags>
       
@@ -220,6 +220,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> 电源 </tag>
             
             <tag> 数控电源 </tag>
@@ -233,8 +235,6 @@
             <tag> PID </tag>
             
             <tag> Buck-Boost </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
