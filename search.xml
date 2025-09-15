@@ -4,6 +4,41 @@
   
     
     <entry>
+      <title>CUBEMX+STM32+HAL库 串口中断不定长度数据收发</title>
+      <link href="/aritcles/ef261100.html"/>
+      <url>/aritcles/ef261100.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1><blockquote><p>若无特殊说明，串口配置默认为115200 Baud，8位数据位，1位停止位，无校验位。</p></blockquote><h1 id="中断，回调？">中断，回调？</h1><p><strong>中断</strong>：是一种硬件机制，当外设或特定事件发生时，CPU会暂停当前任务，转而执行对应的中断服务程序（ISR），处理完毕后再返回原任务。</p><p><strong>中断回调</strong>：是软件层面的机制。当中断发生并被ISR捕获后，HAL库会自动调用用户自定义的回调函数，用户仅需在回调中编写具体的处理逻辑。</p><p><strong>核心思路</strong>：每接收1个字节数据，就触发1次中断，进入中断回调函数。若检测到包头，开始将数据存入缓冲区，并更新索引。达到指定长度，或接收到包尾后，进入数据处理函数。</p><h1 id="CUBEMX配置">CUBEMX配置</h1><h2 id="新建工程">新建工程</h2><p>新建CUBEMX工程（略），打开串口配置页面，选择异步模式，其余配置保持默认。</p><p><img src="https://img-host-3w9.pages.dev/img/article/STM32/uart1.png" alt="uart1"></p><h2 id="配置中断">配置中断</h2><p>在NVIC配置页面，勾选USARTx global interrupt，启用串口中断。</p><p><img src="https://img-host-3w9.pages.dev/img/article/STM32/uartit1.png" alt="uartit1"></p><h2 id="生成代码">生成代码</h2><p>配置工程名、Code Generator等基本设置，生成代码。</p><p><img src="https://img-host-3w9.pages.dev/img/article/STM32/uart4.png" alt="uart4"></p><h1 id="Keil代码">Keil代码</h1><h2 id="函数介绍">函数介绍</h2><p>HAL库的普通串口中断接收函数如下：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_UART_Receive_IT(UART_HandleTypeDef *huart, <span class="type">uint8_t</span> *pData, <span class="type">uint16_t</span> Size)</span><br></pre></td></tr></table></figure><p>其中，三个参数分别为串口号、首位接收数据地址、数据长度。</p><p>串口中断回调函数如下：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span>&#123;</span><br><span class="line">    <span class="comment">// 接收完成后的处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="初始化">初始化</h2><ul><li><p>定义接收缓冲区、数据索引和数据存放缓冲区变量</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* USER CODE BEGIN PV */</span></span><br><span class="line"><span class="type">uint8_t</span> rx_buf = <span class="number">0</span>;</span><br><span class="line"><span class="type">uint8_t</span> rx_idx = <span class="number">0</span>;</span><br><span class="line"><span class="type">uint8_t</span> UART1_RX_BUF[<span class="number">32</span>];</span><br><span class="line"><span class="comment">/* USER CODE END PV */</span></span><br></pre></td></tr></table></figure></li><li><p>开启串口中断接收</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* USER CODE BEGIN 2 */</span></span><br><span class="line">HAL_UART_Receive_IT(&amp;huart1, &amp;rx_buf, <span class="number">1</span>);</span><br><span class="line"><span class="comment">/* USER CODE END 2 */</span></span><br></pre></td></tr></table></figure></li></ul><h2 id="重写中断回调函数">重写中断回调函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* USER CODE BEGIN 4 */</span></span><br><span class="line"><span class="comment">// 假设数据包格式为：AA BB（包头） + 12字节数据 + CC DD（包尾）</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(huart-&gt;Instance == USART1)&#123;</span><br><span class="line">    <span class="keyword">if</span>(rx_idx == <span class="number">0</span> &amp;&amp; rx_buf != <span class="number">0xAA</span>)&#123; <span class="comment">// 检验包头1</span></span><br><span class="line">      HAL_UART_Receive_IT(&amp;huart1, &amp;rx_buf, <span class="number">1</span>); <span class="comment">// 若包头错误则不处理数据，直接重启接收</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123; <span class="comment">// 包头正确，存数据</span></span><br><span class="line">      UART1_RX_BUF[rx_idx++] = rx_buf;</span><br><span class="line">      <span class="keyword">if</span>(rx_idx == <span class="number">16</span>)&#123; <span class="comment">// 达到数据长度</span></span><br><span class="line">        rx_idx = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(UART1_RX_BUF[<span class="number">1</span>] == <span class="number">0xBB</span>)&#123; <span class="comment">// 检验包头2</span></span><br><span class="line">          DataReceive(UART1_RX_BUF); <span class="comment">// 数据处理函数，由用户实现，建议含包尾检验</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      HAL_UART_Receive_IT(&amp;huart1, &amp;rx_buf, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* USER CODE END 4 */</span></span><br></pre></td></tr></table></figure><ul><li>若包中数据长度未知，则可以将<code>if(rx_idx == 16)</code>的判定条件改为<code>if(rx_idx &gt;= 2 &amp;&amp; UART1_RX_BUF[rx_idx-1] == 0xDD &amp;&amp; UART1_RX_BUF[rx_idx-2] == 0xCC)</code>，即检测到包尾时进入数据处理函数。</li></ul><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> STM32 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> CUBEMX </tag>
+            
+            <tag> Keil </tag>
+            
+            <tag> HAL库 </tag>
+            
+            <tag> UART </tag>
+            
+            <tag> 中断 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>关于 Butterfly 主题下 Fontawesome 图标显示为 X 的问题</title>
       <link href="/aritcles/7644c592.html"/>
       <url>/aritcles/7644c592.html</url>
@@ -220,9 +255,9 @@
             
             <tag> Issues </tag>
             
-            <tag> Hexo </tag>
-            
             <tag> Butterfly </tag>
+            
+            <tag> Hexo </tag>
             
             <tag> KaTeX </tag>
             
