@@ -20,6 +20,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -27,8 +29,6 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
@@ -148,6 +148,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -155,8 +157,6 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
@@ -181,6 +181,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -188,8 +190,6 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
@@ -251,6 +251,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -258,8 +260,6 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
@@ -284,6 +284,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> VESC </tag>
             
             <tag> FOC </tag>
@@ -291,8 +293,6 @@
             <tag> 无刷电机 </tag>
             
             <tag> ROBOCON </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
@@ -348,8 +348,6 @@
       
         <tags>
             
-            <tag> 开源 </tag>
-            
             <tag> 电源 </tag>
             
             <tag> 数控电源 </tag>
@@ -363,6 +361,8 @@
             <tag> PID </tag>
             
             <tag> Buck-Boost </tag>
+            
+            <tag> 开源 </tag>
             
         </tags>
       
