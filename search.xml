@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>通用遥控方案【机器人、无人机、遥控车】</title>
+      <link href="/aritcles/4fc11e3.html"/>
+      <url>/aritcles/4fc11e3.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> Projects </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> CUBEMX </tag>
+            
+            <tag> HAL库 </tag>
+            
+            <tag> 遥控 </tag>
+            
+            <tag> 开源 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>VESC4</title>
       <link href="/aritcles/49a11de3.html"/>
       <url>/aritcles/49a11de3.html</url>
@@ -88,9 +121,9 @@
             
             <tag> CUBEMX </tag>
             
-            <tag> Keil </tag>
-            
             <tag> HAL库 </tag>
+            
+            <tag> Keil </tag>
             
             <tag> UART </tag>
             
@@ -218,9 +251,9 @@
             
             <tag> CUBEMX </tag>
             
-            <tag> Keil </tag>
-            
             <tag> HAL库 </tag>
+            
+            <tag> Keil </tag>
             
             <tag> UART </tag>
             
@@ -348,6 +381,8 @@
       
         <tags>
             
+            <tag> 开源 </tag>
+            
             <tag> 电源 </tag>
             
             <tag> 数控电源 </tag>
@@ -361,8 +396,6 @@
             <tag> PID </tag>
             
             <tag> Buck-Boost </tag>
-            
-            <tag> 开源 </tag>
             
         </tags>
       
